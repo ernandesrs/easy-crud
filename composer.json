@@ -3,7 +3,8 @@
     "type": "library",
     "description": "Features for database manipulation: create, read, update, delete",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "0.0.1",
+    "keywords": ["database", "php", "crud", "ernandesrs", "easy-crud"],
     "homepage": "https://github.com/ernandesrs/easy-crud",
     "authors": [
         {
