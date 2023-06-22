@@ -216,6 +216,24 @@ class Crud
     }
 
     /**
+     * Delete
+     *
+     * @return bool
+     */
+    public function delete()
+    {
+        $this->operationType = self::OPERATION_TYPE_DELETE;
+
+        $statement = $this->connection
+            ->getPdo()
+            ->prepare($this->makeSql()->sql);
+
+        $statement->bindParam(":{$this->primaryKey}", $this->data[$this->primaryKey]);
+
+        return $statement->execute();
+    }
+
+    /**
      * Fetch
      *
      * @return Crud

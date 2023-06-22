@@ -18,12 +18,7 @@ define("CONF_EASY_CRUD", [
     ]
 ]);
 
-$user = (new UserModel())->find(54);
+$user = (new UserModel())->find(67);
 var_dump(
-    $user->update([
-        "first_name" => "Example",
-        "last_name" => "Example",
-        "username" => "exampleusername",
-        "gender" => "n"
-    ])
+    $user->delete()
 );

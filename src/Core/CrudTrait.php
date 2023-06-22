@@ -79,6 +79,14 @@ trait CrudTrait
                 $this->updateFields(),
                 "{$this->primaryKey} = :{$this->primaryKey}"
             ], $this->updateSql);
+        } elseif ($this->operationType === self::OPERATION_TYPE_DELETE) {
+            $this->sql = str_replace([
+                "{{_table_}}",
+                "{{_conditions_}}"
+            ], [
+                $this->table,
+                "{$this->primaryKey}=:{$this->primaryKey}"
+            ], $this->deleteSql);
         }
 
         return $this;

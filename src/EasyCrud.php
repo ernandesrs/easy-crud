@@ -3,6 +3,7 @@
 namespace ErnandesRS\EasyCrud;
 
 use ErnandesRS\EasyCrud\Core\Crud;
+use ErnandesRS\EasyCrud\Traits\DeleteTrait;
 use ErnandesRS\EasyCrud\Traits\InsertTrait;
 use ErnandesRS\EasyCrud\Traits\SelectTrait;
 use ErnandesRS\EasyCrud\Traits\UpdateTrait;
@@ -12,6 +13,7 @@ class EasyCrud extends Crud
     use SelectTrait;
     use InsertTrait;
     use UpdateTrait;
+    use DeleteTrait;
 
     /**
      * Constructor
