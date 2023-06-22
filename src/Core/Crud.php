@@ -4,6 +4,8 @@ namespace ErnandesRS\EasyCrud\Core;
 
 class Crud
 {
+    use CrudTrait;
+
     /**
      * Select operation
      */
@@ -92,6 +94,7 @@ class Crud
      *
      * @var string
      */
+
     private string $fields;
 
     /**
@@ -99,6 +102,7 @@ class Crud
      * 
      * @var array
      */
+
     private array $conditions;
 
     /**
@@ -159,38 +163,42 @@ class Crud
     }
 
     /**
-     * Where
+     * Insert
      *
-     * @param string $field
-     * @param string $operator
-     * @param string|integer|float $value
-     * @return Crud
+     * @param array $data
+     * @return null|Crud
      */
-    protected function where(string $field, string $operator, string|int|float|bool $value)
+    protected function insert(array $data)
     {
-        $this->conditions[$field][] = ["AND", $field, $operator, $value];
-        $this->values[$field][] = [
-            $field,
-            $value
-        ];
-        return $this;
-    }
+        $this->operationType = self::OPERATION_TYPE_INSERT;
+        $this->data = $data;
 
-    /**
-     * Or Where
-     *
-     * @param string $field
-     * @param string $operator
-     * @param string|integer|float $value
-     * @return Crud
-     */
-    protected function orWhere(string $field, string $operator, string|int|float|bool $value)
-    {
-        $this->conditions[$field][] = ["OR", $field, $operator, $value];
-        $this->values[$field][] = [
-            $field,
-            $value
-        ];
+        $statement = $this->connection
+            ->getPdo()
+            ->prepare($this->makeSql()->sql);
+
+        foreach ($this->data as $param => $value) {
+            $paramType = \PDO::PARAM_STR;
+
+            if (is_null($value)) {
+                $paramType = \PDO::PARAM_NULL;
+            } else if (is_bool($value)) {
+                $paramType = \PDO::PARAM_BOOL;
+            } else if (is_int($value)) {
+                $paramType = \PDO::PARAM_INT;
+            }
+
+            if (!$statement->bindValue(":{$param}", $value, $paramType)) {
+                throw new \Exception("Fail on bind :{$param} with value {$value}. Fail info: " . $statement->errorInfo());
+            }
+        }
+
+        if (!$statement->execute()) {
+            return null;
+        }
+
+        $this->data[$this->primaryKey] = $this->connection->getPdo()->lastInsertId();
+
         return $this;
     }
 
@@ -240,45 +248,5 @@ class Crud
         }
 
         return $this;
-    }
-
-    /**
-     * Make sql
-     *
-     * @return Crud
-     */
-    private function makeSql()
-    {
-        if ($this->operationType === self::OPERATION_TYPE_SELECT) {
-            $this->sql = str_replace([
-                "{{_fields_}}",
-                "{{_table_}}",
-                "{{_conditions_}}"
-            ], [
-                $this->fields,
-                $this->table,
-                $this->conditions()
-            ], $this->selectSql);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Conditions array to string
-     *
-     * @return string
-     */
-    private function conditions()
-    {
-        return implode(" ", array_merge([1], array_map(function ($condition) {
-            $condStr = [];
-
-            foreach ($condition as $key => $cond) {
-                $condStr[] = "{$cond[0]} {$cond[1]} {$cond[2]} :{$cond[1]}_{$key}";
-            }
-
-            return implode(" ", $condStr);
-        }, $this->conditions)));
     }
 }

@@ -3,11 +3,13 @@
 namespace ErnandesRS\EasyCrud;
 
 use ErnandesRS\EasyCrud\Core\Crud;
+use ErnandesRS\EasyCrud\Traits\InsertTrait;
 use ErnandesRS\EasyCrud\Traits\SelectTrait;
 
 class EasyCrud extends Crud
 {
     use SelectTrait;
+    use InsertTrait;
 
     /**
      * Constructor

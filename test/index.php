@@ -18,11 +18,14 @@ define("CONF_EASY_CRUD", [
     ]
 ]);
 
-$user = (new UserModel())
-    ->findByEmail("visitor@mail.com", "id, first_name, email");
-    // ->find(10, "id, first_name");
-    // ->where("id", ">", 2)
-    // ->where("id", "<", 8)
-    // ->orWhere("email", "=", "ernandesrsouza@gmail.com")
-    // ->getAll();
-var_dump($user);
+$user = new UserModel();
+var_dump(
+    $user->create([
+        "first_name" => "New user",
+        "last_name" => "Last",
+        "username" => "NewLast12",
+        "gender" => "Last",
+        "email" => "email@emlalasl12.com",
+        "password" => password_hash("password", PASSWORD_DEFAULT)
+    ])
+);
