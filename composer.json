@@ -1,0 +1,23 @@
+{
+    "name": "ernandesrs/easy-crud",
+    "type": "library",
+    "description": "Features for database manipulation: create, read, update, delete",
+    "license": "MIT",
+    "version": "1.0.0",
+    "homepage": "https://github.com/ernandesrs/easy-crud",
+    "authors": [
+        {
+            "name": "Ernandes R Souza",
+            "email": "ernandesrsouza@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8"
+    },
+    "autoload": {
+        "psr-4": {
+            "ErnandesRS\\EasyCrud\\": "src/"
+        }
+    }
+}
