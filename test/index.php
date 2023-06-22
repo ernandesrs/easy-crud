@@ -21,9 +21,9 @@ define("CONF_EASY_CRUD", [
 $user = (new UserModel())->find(54);
 var_dump(
     $user->update([
-        "first_name" => "Ernandes",
-        "last_name" => "Rosa de Souza",
-        "username" => "ernandesrs",
+        "first_name" => "Example",
+        "last_name" => "Example",
+        "username" => "exampleusername",
         "gender" => "n"
     ])
 );
