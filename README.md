@@ -1,5 +1,5 @@
 # EasyCrud
-<b>EasyCrud</b> é um projeto de estudo de PHP, ele é simples componente PHP que visa facilitar os processos mais básicos de manipulação de banco de dados MYSQL: CREATE, READ, UPDATE, DELETE.
+<b>EasyCrud</b> é um projeto de estudo do PHP, ele um é simples componente PHP que visa facilitar os processos mais básicos de manipulação de banco de dados MYSQL: CREATE, READ, UPDATE, DELETE.
 
 # Instalação
 A forma mais fácil de instalar é via composer:
@@ -25,10 +25,9 @@ define("CONF_EASY_CRUD", [
 ```
 
 # Utilização
-A utilização também é bastante simples, basta criar uma instância de <b>\ErnandesRS\EasyCrud\EasyCrud</b> passando para o construtor o nome da tabela e o nome da coluna <i>primary key</i> da tabela.
+A utilização também é bastante simples, basta criar uma instância de <b>\ErnandesRS\EasyCrud\EasyCrud</b>, passando para o construtor o nome da tabela e o nome da coluna <i>chave primária</i> da tabela.
 
-## Utilização rápida
-Veja abaixo um exemplo para uso em uma tabela <b>users</b>, cuja coluna <i>primary key</i> seja <b>iduser</b>:
+Veja abaixo um exemplo para uso em uma tabela <b>users</b>, cuja coluna <i>chave primária</i> seja <b>iduser</b>:
 
 ```php
 
@@ -36,38 +35,72 @@ $easy = new \ErnandesRS\EasyCrud\EasyCrud("users", "iduser");
 
 ```
 
-O segundo parâmetro é opcional caso a coluna <i>primary key</i> seja <b>id</b>.
+O segundo parâmetro é opcional caso a coluna <i>chave primária</i> seja <b>id</b>.
 
-## Exemplos de consulta
-Veja abaixo alguns exemplos de como realizar consultas em uma tabela.
+# Exemplos de consulta
+Veja abaixo alguns exemplos de como realizar consultas em uma tabela de usuários.
+
+Recuperando um único registro:
 
 ```php
 
-$easy = new \ErnandesRS\EasyCrud\EasyCrud("users");
-
-// Obtém um
 $one = $easy->getOne();
 
-// Obtém um com apenas algumas colunas
+```
+
+Recuperando um único registro com algumas colunas específicas:
+
+```php
+
 $one = $easy->getOne("id, first_name, username");
 
-// Obtém todos
-$all = $easy->getAll();
+```
 
-// Obtém todos com apenas algumas colunas
-$all = $easy->getAll("id, first_name, username");
+Recuperando um registro pela <i>chave primária</i> primária:
 
-// Obtém muitos com condição AND
-$many = $easy->where("id", ">", "3")->where("id", "<", "10")->getAll();
+```php
 
-// Obtém muitos com condição OR
-$many = $easy->where("id", ">", "3")->orWhere("id", "=", "10")->getAll();
-
-// Obtém com primary key(id)
 $find = $easy->find(10);
 
-// Obtém com primary key(id) com apenas algumas colunas
+```
+
+Recuperando um registro pela <i>chave primária</i> primária com algumas colunas específicas:
+
+```php
+
 $find = $easy->find(10, "id, first_name, username");
+
+```
+
+Obtendo todos registros:
+
+```php
+
+$all = $easy->getAll();
+
+```
+
+Obtendo todos registros com algumas colunas específicas:
+
+```php
+
+$all = $easy->getAll("id, first_name, username");
+
+```
+
+Você pode obter registros que atendam algumas condições com operador AND:
+
+```php
+
+$all = $easy->where("id", "<=" , 5)->getAll();
+
+```
+
+Você pode obter registros com condições utilizando o operador OR:
+
+```php
+
+$all = $easy->where("id", "<=", 3)->orWhere("id", "=" , 10)->getAll();
 
 ```
 
