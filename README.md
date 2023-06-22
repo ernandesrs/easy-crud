@@ -117,7 +117,7 @@ $new = $easy->create([
 ```
 
 # Exemplo de atualização
-Veja abaixo um exemplode de como atualizar um registro.
+Veja abaixo um exemplo de de como atualizar um registro.
 
 ```php
 
@@ -128,6 +128,16 @@ $easy->find(54)->update([
     "username" => "newusername",
     "gender" => "m"
 ]);
+
+```
+
+# Exemplo de exclusão
+Veja abaixo um exemplo de de como excluir um registro.
+
+```php
+
+$easy = new EasyCrud("users");
+$easy->find(54)->delete();
 
 ```
 
