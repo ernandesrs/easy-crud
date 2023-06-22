@@ -177,27 +177,40 @@ class Crud
             ->getPdo()
             ->prepare($this->makeSql()->sql);
 
-        foreach ($this->data as $param => $value) {
-            $paramType = \PDO::PARAM_STR;
-
-            if (is_null($value)) {
-                $paramType = \PDO::PARAM_NULL;
-            } else if (is_bool($value)) {
-                $paramType = \PDO::PARAM_BOOL;
-            } else if (is_int($value)) {
-                $paramType = \PDO::PARAM_INT;
-            }
-
-            if (!$statement->bindValue(":{$param}", $value, $paramType)) {
-                throw new \Exception("Fail on bind :{$param} with value {$value}. Fail info: " . $statement->errorInfo());
-            }
-        }
+        $statement = $this->insertUpdateBind($statement);
 
         if (!$statement->execute()) {
             return null;
         }
 
         $this->data[$this->primaryKey] = $this->connection->getPdo()->lastInsertId();
+
+        return $this;
+    }
+
+    /**
+     * Update
+     *
+     * @param array $data
+     * @return null|Crud
+     */
+    protected function update(array $data)
+    {
+        $this->operationType = self::OPERATION_TYPE_UPDATE;
+
+        foreach ($data as $k => $d) {
+            $this->data[$k] = $d;
+        }
+
+        $statement = $this->connection
+            ->getPdo()
+            ->prepare($this->makeSql()->sql);
+
+        $statement = $this->insertUpdateBind($statement);
+
+        if (!$statement->execute()) {
+            return null;
+        }
 
         return $this;
     }
@@ -248,5 +261,32 @@ class Crud
         }
 
         return $this;
+    }
+
+    /**
+     * Bind(insert/update)
+     *
+     * @param \PDOStatement $stmt
+     * @return \PDOStatement
+     */
+    private function insertUpdateBind(\PDOStatement $stmt)
+    {
+        foreach ($this->data as $param => $value) {
+            $paramType = \PDO::PARAM_STR;
+
+            if (is_null($value)) {
+                $paramType = \PDO::PARAM_NULL;
+            } else if (is_bool($value)) {
+                $paramType = \PDO::PARAM_BOOL;
+            } else if (is_int($value)) {
+                $paramType = \PDO::PARAM_INT;
+            }
+
+            if (!$stmt->bindValue(":{$param}", $value, $paramType)) {
+                throw new \Exception("Fail on bind :{$param} with value {$value}. Fail info: " . $stmt->errorInfo());
+            }
+        }
+
+        return $stmt;
     }
 }

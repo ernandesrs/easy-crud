@@ -18,14 +18,12 @@ define("CONF_EASY_CRUD", [
     ]
 ]);
 
-$user = new UserModel();
+$user = (new UserModel())->find(54);
 var_dump(
-    $user->create([
-        "first_name" => "New user",
-        "last_name" => "Last",
-        "username" => "NewLast12",
-        "gender" => "Last",
-        "email" => "email@emlalasl12.com",
-        "password" => password_hash("password", PASSWORD_DEFAULT)
+    $user->update([
+        "first_name" => "Ernandes",
+        "last_name" => "Rosa de Souza",
+        "username" => "ernandesrs",
+        "gender" => "n"
     ])
 );

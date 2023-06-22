@@ -69,6 +69,16 @@ trait CrudTrait
                     return ":{$key}";
                 }, array_keys($this->data)))
             ], $this->insertSql);
+        } else if ($this->operationType === self::OPERATION_TYPE_UPDATE) {
+            $this->sql = str_replace([
+                "{{_table_}}",
+                "{{_fields_}}",
+                "{{_conditions_}}"
+            ], [
+                $this->table,
+                $this->updateFields(),
+                "{$this->primaryKey} = :{$this->primaryKey}"
+            ], $this->updateSql);
         }
 
         return $this;
@@ -90,5 +100,21 @@ trait CrudTrait
 
             return implode(" ", $condStr);
         }, $this->conditions)));
+    }
+
+    /**
+     * Get Update fields
+     *
+     * @return string
+     */
+    private function updateFields()
+    {
+        $arr = [];
+
+        foreach ($this->data as $key => $value) {
+            $arr[] = "{$key}=:{$key}";
+        }
+
+        return implode(", ", $arr);
     }
 }
