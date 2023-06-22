@@ -104,6 +104,18 @@ $all = $easy->where("id", "<=", 3)->orWhere("id", "=" , 10)->getAll();
 
 ```
 
+# Exemplos de inserção
+Veja abaixo alguns exemplos de como realizar inserções de registro em uma tabela.
+
+```php
+
+$new = $easy->create([
+    "first_name" => "John"
+    "last_name" => "Marinheiro"
+]);
+
+```
+
 # Requisitos
 
     * PHP 8 ou superior
