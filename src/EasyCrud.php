@@ -52,6 +52,54 @@ class EasyCrud extends Crud
     }
 
     /**
+     * Where Null
+     *
+     * @param string $field
+     * @return EasyCrud
+     */
+    public function whereNull(string $field)
+    {
+        parent::whereNull($field);
+        return $this;
+    }
+
+    /**
+     * Where Not Null
+     *
+     * @param string $field
+     * @return EasyCrud
+     */
+    public function whereNotNull(string $field)
+    {
+        parent::whereNotNull($field);
+        return $this;
+    }
+
+    /**
+     * Where Null
+     *
+     * @param string $field
+     * @return EasyCrud
+     */
+    public function orWhereNull(string $field)
+    {
+        parent::orWhereNull($field);
+        return $this;
+    }
+
+    /**
+     * Where Not Null
+     *
+     * @param string $field
+     * @return EasyCrud
+     */
+    public function orWhereNotNull(string $field)
+    {
+        parent::orWhereNotNull($field);
+        return $this;
+    }
+
+    /**
      * Data
      *
      * @return mixed

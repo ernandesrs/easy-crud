@@ -41,6 +41,54 @@ trait CrudTrait
     }
 
     /**
+     * Where Null
+     *
+     * @param string $field
+     * @return Crud
+     */
+    protected function whereNull(string $field)
+    {
+        $this->conditions[$field][] = ["AND", $field, "IS NULL"];
+        return $this;
+    }
+
+    /**
+     * Where Not Null
+     *
+     * @param string $field
+     * @return Crud
+     */
+    protected function whereNotNull(string $field)
+    {
+        $this->conditions[$field][] = ["AND", $field, "IS NOT NULL"];
+        return $this;
+    }
+
+    /**
+     * Or Where Null
+     *
+     * @param string $field
+     * @return Crud
+     */
+    protected function orWhereNull(string $field)
+    {
+        $this->conditions[$field][] = ["OR", $field, "IS NULL"];
+        return $this;
+    }
+
+    /**
+     * Or Where Not Null
+     *
+     * @param string $field
+     * @return Crud
+     */
+    protected function orWhereNotNull(string $field)
+    {
+        $this->conditions[$field][] = ["OR", $field, "IS NOT NULL"];
+        return $this;
+    }
+
+    /**
      * Limit
      *
      * @param integer $limit
@@ -119,9 +167,12 @@ trait CrudTrait
             $condStr = [];
 
             foreach ($condition as $key => $cond) {
-                $condStr[] = "{$cond[0]} {$cond[1]} {$cond[2]} :{$cond[1]}_{$key}";
+                if (in_array($cond[2], ["IS NULL", "IS NOT NULL"])) {
+                    $condStr[] = "{$cond[0]} {$cond[1]} {$cond[2]}";
+                } else {
+                    $condStr[] = "{$cond[0]} {$cond[1]} {$cond[2]} :{$cond[1]}_{$key}";
+                }
             }
-
             return implode(" ", $condStr);
         }, $this->conditions)));
     }
