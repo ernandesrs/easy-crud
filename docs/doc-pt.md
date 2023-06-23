@@ -4,7 +4,7 @@ A forma mais fácil de instalar é via composer:
 > composer require ernandesrs/easy-crud
 
 # Configuração
-A configuração é bastante simples, você só precisa de uma constante contendo um array com as informações de conexão e configuração do banco de dados, segue abaixo um exemplo:
+A configuração é bastante simples, você só precisa criar um banco de dados e definir nas configurações do seu projeto a constante abaixo. Ela possui as infomações e configurações necessárias para acesso ao seu banco de dados.
 
 ```php
 
@@ -22,13 +22,16 @@ define("CONF_EASY_CRUD", [
 ```
 
 # Utilização
-A utilização também é bastante simples, basta criar uma instância de <b>\ErnandesRS\EasyCrud\EasyCrud</b>, passando para o construtor o nome da tabela e o nome da coluna <i>chave primária</i> da tabela.
+A utilização também é bastante simples, basta criar uma instância de <b>EasyCrud</b>, passando para o construtor o nome da tabela e o nome da coluna <i>chave primária</i> da tabela.
 
 Veja abaixo um exemplo para uso em uma tabela <b>users</b>, cuja coluna <i>chave primária</i> seja <b>iduser</b>:
 
 ```php
+<?php
 
-$easy = new \ErnandesRS\EasyCrud\EasyCrud("users", "iduser");
+require __DIR__ . "/../vendor/autoload.php";
+
+$user = new \ErnandesRS\EasyCrud\EasyCrud("users", "iduser");
 
 ```
 
@@ -37,67 +40,75 @@ O segundo parâmetro é opcional caso a coluna <i>chave primária</i> seja <b>id
 # Exemplos de consulta
 Veja abaixo alguns exemplos de como realizar consultas em uma tabela de usuários.
 
-Recuperando um único registro:
+### Recuperando um único registro
 
 ```php
 
-$one = $easy->getOne();
+$user = $user->getOne();
+var_dump($user);
 
 ```
 
-Recuperando um único registro com algumas colunas específicas:
+### Recuperando um único registro com algumas colunas específicas
 
 ```php
 
-$one = $easy->getOne("id, first_name, username");
+$user = $user->getOne("id, first_name, username");
+var_dump($user);
 
 ```
 
-Recuperando um registro pela <i>chave primária</i> primária:
+### Recuperando um registro pela <i>chave primária</i>
 
 ```php
 
-$find = $easy->find(10);
+$user = $user->find(10);
+var_dump($user);
 
 ```
 
-Recuperando um registro pela <i>chave primária</i> primária com algumas colunas específicas:
+### Recuperando um registro pela <i>chave primária</i> com algumas colunas específicas
 
 ```php
 
-$find = $easy->find(10, "id, first_name, username");
+$user = $user->find(10, "id, first_name, username");
+var_dump($user);
 
 ```
 
-Obtendo todos registros:
+### Obtendo todos registros
 
 ```php
 
-$all = $easy->getAll();
+$all = $user->getAll();
+var_dump($all);
 
 ```
 
-Obtendo todos registros com algumas colunas específicas:
+### Obtendo todos registros com algumas colunas específicas
 
 ```php
 
-$all = $easy->getAll("id, first_name, username");
+$all = $user->getAll("id, first_name, username");
+var_dump($all);
 
 ```
 
-Você pode obter registros que atendam algumas condições com operador AND:
+### Obter registros que atendam algumas condições com o operador AND
 
 ```php
 
-$all = $easy->where("id", "<=" , 5)->getAll();
+$all = $user->where("id", "<=" , 5)->getAll();
+var_dump($all);
 
 ```
 
-Você pode obter registros com condições utilizando o operador OR:
+### Obter registros com condições utilizando o operador OR
 
 ```php
 
-$all = $easy->where("id", "<=", 3)->orWhere("id", "=" , 10)->getAll();
+$all = $user->where("id", "<=", 3)->orWhere("id", "=" , 10)->getAll();
+var_dump($all);
 
 ```
 
@@ -106,34 +117,39 @@ Veja abaixo um exemplo de como realizar inserções de registro em uma tabela.
 
 ```php
 
-$new = $easy->create([
+$new = $user->create([
     "first_name" => "John"
     "last_name" => "Marinheiro"
 ]);
+var_dump($new);
 
 ```
 
 # Exemplo de atualização
-Veja abaixo um exemplo de de como atualizar um registro.
+Veja abaixo um exemplo de como atualizar um registro.
 
 ```php
 
-$easy = new EasyCrud("users");
-$easy->find(54)->update([
-    "first_name" => "New Name",
-    "last_name" => "New Last Name",
-    "username" => "newusername",
-    "gender" => "m"
-]);
+$user = (new EasyCrud("users"))->find(54);
+if($user) {
+    $user->update([
+        "first_name" => "New Name",
+        "last_name" => "New Last Name",
+        "username" => "newusername",
+        "gender" => "m"
+    ]);
+ }
 
 ```
 
 # Exemplo de exclusão
-Veja abaixo um exemplo de de como excluir um registro.
+Veja abaixo um exemplo de como excluir um registro.
 
 ```php
 
-$easy = new EasyCrud("users");
-$easy->find(54)->delete();
+$user = (new EasyCrud("users"))->find(54);
+if($user) {
+    $user->delete();
+}
 
 ```
