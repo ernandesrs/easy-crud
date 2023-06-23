@@ -111,6 +111,13 @@ class Crud
     protected int $limit;
 
     /**
+     * Offset
+     *
+     * @var null|integer
+     */
+    protected null|int $offset;
+
+    /**
      * Conditions
      * 
      * @var array
@@ -152,6 +159,7 @@ class Crud
         $this->fields = "*";
         $this->conditions = [];
         $this->limit = -1;
+        $this->offset = null;
         $this->values = [];
     }
 

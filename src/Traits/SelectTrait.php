@@ -17,6 +17,18 @@ trait SelectTrait
     }
 
     /**
+     * Offset
+     *
+     * @param integer $offset
+     * @return \ErnandesRS\EasyCrud\EasyCrud
+     */
+    public function offset(int $offset)
+    {
+        parent::offset($offset);
+        return $this;
+    }
+
+    /**
      * Find By Primary key
      *
      * @param integer $id

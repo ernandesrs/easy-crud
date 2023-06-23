@@ -101,6 +101,18 @@ trait CrudTrait
     }
 
     /**
+     * Offset
+     *
+     * @param integer $offset
+     * @return \ErnandesRS\EasyCrud\Core\Crud
+     */
+    protected function offset(int $offset)
+    {
+        $this->offset = $offset;
+        return $this;
+    }
+
+    /**
      * Make sql
      *
      * @return \ErnandesRS\EasyCrud\Core\Crud
@@ -120,6 +132,12 @@ trait CrudTrait
 
             if ($this->limit != -1) {
                 $this->sql .= " LIMIT {$this->limit}";
+            } elseif ($this->offset) {
+                throw new \Exception("Set a limit to use offset");
+            }
+
+            if ($this->offset) {
+                $this->sql .= " OFFSET {$this->offset}";
             }
         } else if ($this->operationType === self::OPERATION_TYPE_INSERT) {
             $this->sql = str_replace([

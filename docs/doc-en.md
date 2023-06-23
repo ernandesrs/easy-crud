@@ -129,6 +129,7 @@ public function whereNull(string $field);
 public function whereNotNull(string $field);
 public function orWhereNull(string $field);
 public function orWhereNotNull(string $field);
+public function offset(int $offset);
 
 ```
 

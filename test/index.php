@@ -28,9 +28,10 @@ define("CONF_EASY_CRUD", [
 // );
 
 var_dump(
-    (new UserModel())->limit(3)->whereNull("email_verified_at")->getAll(),
+    // (new UserModel())->limit(3)->whereNull("email_verified_at")->getAll(),
     // (new UserModel())->limit(3)->whereNotNull("email_verified_at")->getAll(),
     // (new UserModel())->limit(4)->where("id", "=", 10)->orWhereNull("email_verified_at")->getAll(),
     // (new UserModel())->limit(4)->where("id", "=", 2)->orWhereNotNull("email_verified_at")->getAll(),
     // (new UserModel())->limit(4)->where("email_verified_at", "=", "2023-06-19 18:06:43")->orWhereNull("email_verified_at")->getAll(),
+    (new UserModel())->limit(10)->offset(10)->getAll()
 );
