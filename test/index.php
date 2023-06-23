@@ -18,7 +18,11 @@ define("CONF_EASY_CRUD", [
     ]
 ]);
 
-$user = (new UserModel())->find(67);
+// $user = (new UserModel())->find(67);
+// var_dump(
+//     $user->delete()
+// );
+
 var_dump(
-    $user->delete()
+    (new UserModel())->limit()->getAll()
 );

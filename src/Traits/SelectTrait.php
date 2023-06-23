@@ -5,6 +5,18 @@ namespace ErnandesRS\EasyCrud\Traits;
 trait SelectTrait
 {
     /**
+     * Limit
+     *
+     * @param integer $limit
+     * @return \ErnandesRS\EasyCrud\EasyCrud
+     */
+    public function limit(int $limit = 25)
+    {
+        parent::limit($limit);
+        return $this;
+    }
+
+    /**
      * Find By Primary key
      *
      * @param integer $id

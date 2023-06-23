@@ -41,6 +41,18 @@ trait CrudTrait
     }
 
     /**
+     * Limit
+     *
+     * @param integer $limit
+     * @return \ErnandesRS\EasyCrud\Core\Crud
+     */
+    protected function limit(int $limit = 25)
+    {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
      * Make sql
      *
      * @return \ErnandesRS\EasyCrud\Core\Crud
@@ -57,6 +69,10 @@ trait CrudTrait
                 $this->table,
                 $this->conditions()
             ], $this->selectSql);
+
+            if ($this->limit != -1) {
+                $this->sql .= " LIMIT {$this->limit}";
+            }
         } else if ($this->operationType === self::OPERATION_TYPE_INSERT) {
             $this->sql = str_replace([
                 "{{_table_}}",

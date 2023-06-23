@@ -112,6 +112,15 @@ var_dump($all);
 
 ```
 
+### Limiting results
+
+```php
+
+$all = $user->limit(10)->getAll();
+var_dump($all);
+
+```
+
 # Insert example
 See below an example of how to perform record insertions in a table.
 

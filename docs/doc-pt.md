@@ -112,6 +112,15 @@ var_dump($all);
 
 ```
 
+### Limitando resultados
+
+```php
+
+$all = $user->limit(10)->getAll();
+var_dump($all);
+
+```
+
 # Exemplo de inserção
 Veja abaixo um exemplo de como realizar inserções de registro em uma tabela.
 

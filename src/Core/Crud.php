@@ -94,7 +94,6 @@ class Crud
      *
      * @var string
      */
-
     private string $fields;
 
     /**
@@ -102,8 +101,14 @@ class Crud
      * 
      * @var array
      */
-
     private array $conditions;
+
+    /**
+     * Limit
+     *
+     * @var integer
+     */
+    protected int $limit;
 
     /**
      * Conditions
@@ -146,6 +151,7 @@ class Crud
         $this->sql = "";
         $this->fields = "*";
         $this->conditions = [];
+        $this->limit = -1;
         $this->values = [];
     }
 
