@@ -121,6 +121,17 @@ var_dump($all);
 
 ```
 
+### Outros métodos
+
+```php
+
+public function whereNull(string $field);
+public function whereNotNull(string $field);
+public function orWhereNull(string $field);
+public function orWhereNotNull(string $field);
+
+```
+
 # Exemplo de inserção
 Veja abaixo um exemplo de como realizar inserções de registro em uma tabela.
 

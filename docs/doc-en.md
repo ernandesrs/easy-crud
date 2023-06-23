@@ -121,6 +121,17 @@ var_dump($all);
 
 ```
 
+### Other methods
+
+```php
+
+public function whereNull(string $field);
+public function whereNotNull(string $field);
+public function orWhereNull(string $field);
+public function orWhereNotNull(string $field);
+
+```
+
 # Insert example
 See below an example of how to perform record insertions in a table.
 
